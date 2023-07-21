@@ -14,28 +14,31 @@ export default function PortfolioWindow({
     top,
     index,
 }: PortfolioWindowProps) {
-    const [scroll, setScroll] = useState(0);
+    const [scrollPercentage, setScrollPercentage] = useState(0);
     const [opacity, setOpacity] = useState(0.5);
     const [blur, setBlur] = useState(5);
 
     useEffect(() => {
         const handleScroll = () => {
-            const value = window.scrollY;
-            setScroll((value / 100) - delay);
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const currentScrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+            setScrollPercentage(currentScrollPercentage - delay);
 
-            if (scroll > 14) {
+            if (scrollPercentage > 5) {
                 setBlur(4);
                 setOpacity(0.6);
-                if (scroll > 14.3) {
+                if (scrollPercentage > 5.3) {
                     setBlur(3);
                     setOpacity(0.7);
-                    if (scroll > 14.6) {
+                    if (scrollPercentage > 5.6) {
                         setBlur(2);
                         setOpacity(0.8);
-                        if (scroll > 14.9) {
+                        if (scrollPercentage > 5.9) {
                             setBlur(1);
                             setOpacity(0.9);
-                            if (scroll > 15.2) {
+                            if (scrollPercentage > 5.2) {
                                 setBlur(0);
                                 setOpacity(1);
                             }
@@ -47,25 +50,25 @@ export default function PortfolioWindow({
                 setOpacity(0.5);
             }
 
-            if (scroll > 23) {
+            if (scrollPercentage > 7) {
                 setOpacity(0.9);
-                if (scroll > 23.5) {
+                if (scrollPercentage > 7.5) {
                     setOpacity(0.8);
-                    if (scroll > 24) {
+                    if (scrollPercentage > 8) {
                         setOpacity(0.7);
-                        if (scroll > 24.5) {
+                        if (scrollPercentage > 8.5) {
                             setOpacity(0.6);
-                            if (scroll > 25) {
+                            if (scrollPercentage > 9) {
                                 setOpacity(0.5);
-                                if (scroll > 25.5) {
+                                if (scrollPercentage > 9.5) {
                                     setOpacity(0.4);
-                                    if (scroll > 26) {
+                                    if (scrollPercentage > 10) {
                                         setOpacity(0.3);
-                                        if (scroll > 26.5) {
+                                        if (scrollPercentage > 10.5) {
                                             setOpacity(0.2);
-                                            if (scroll > 27) {
+                                            if (scrollPercentage > 11) {
                                                 setOpacity(0.1);
-                                                if (scroll > 27.5) {
+                                                if (scrollPercentage > 11.5) {
                                                     setOpacity(0);
                                                 }
                                             }
@@ -83,11 +86,11 @@ export default function PortfolioWindow({
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [scroll, delay]);
+    }, [scrollPercentage, delay]);
 
-    const calculatedTop = 50 - scroll * 10 + "vh";
-    const calculatedWidth = scroll > 28 ? 0 + "vw" : scroll * 10 + "vw";
-    const calculatedHeight = scroll > 28 ? 0 + "vw" : scroll * 10 + "vw";
+    const calculatedTop = 50 - scrollPercentage * 30 + "vh";
+    const calculatedWidth = scrollPercentage > 28 ? 0 + "vw" : scrollPercentage * 30 + "vw";
+    const calculatedHeight = scrollPercentage > 28 ? 0 + "vw" : scrollPercentage * 30 + "vw";
     const calculatedFilter = "blur(" + blur + "px)";
 
     return (

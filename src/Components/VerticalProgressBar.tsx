@@ -10,9 +10,12 @@ const VerticalProgressBar = () => {
             const scrolledHeight = window.scrollY;
             const percentage = (scrolledHeight / (fullHeight - windowHeight)) * 100;
             setScrollPercentage(percentage);
+
+
         };
 
         window.addEventListener('scroll', handleScroll);
+
 
         return () => {
             window.removeEventListener('scroll', handleScroll);

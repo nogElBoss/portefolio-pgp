@@ -20,7 +20,9 @@ export default function Year({ year, start, end, scroll }: PortfolioWindow) {
         })
     } */
 
+
+
     return (
-        <Heading fontSize="20px" fontFamily="numbers" color="white" opacity={(scroll >= start && scroll <= end) ? 1 : 0.05} transition="all .2s ease-in-out" transform={(scroll >= start && scroll <= end) ? "scale(1.1)" : "scale(1)"}>{year}</Heading>
+        <Heading position="absolute" left={(start + 1.2) + "vw"} fontSize="20px" fontFamily="numbers" color="white" opacity={(scroll >= start && scroll <= end) ? 1 : 0.05} transition="all .2s ease-in-out" transform={(scroll >= start && scroll <= end) ? "scale(1.1)" : "scale(1)"}>{year}</Heading>
     );
 };
