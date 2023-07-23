@@ -3,16 +3,22 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import VerticalProgressBar from "@/Components/VerticalProgressBar";
 import Year from "@/Components/Year";
+import { Suspense, lazy } from "react";
+
+const LazyLoadedPortfolioWindow = lazy(() => import('@/Components/PortfolioWindow'));
 
 export default function index() {
   const [scroll, setScroll] = useState(0)
   const [textOpacity, setTextOpacity] = useState(1)
   const [scrollPercentage, setScrollPercentage] = useState(0)
 
-
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
+      const windowWidth = window.innerWidth;
+
+      console.log(windowWidth / windowHeight)
+
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const currentScrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
@@ -25,7 +31,7 @@ export default function index() {
     };
   }, [scrollPercentage]);
 
-  /* if (typeof window !== "undefined") {
+  if (typeof window !== "undefined") {
     window.addEventListener("scroll", function () {
       let value = window.scrollY
       setScroll((value / 200))
@@ -64,29 +70,32 @@ export default function index() {
         }
       }
     })
-  } */
+  }
 
   return (
     <Flex backgroundColor="black" w="100vw" h="1850vw" alignItems="center" justifyContent="center" overflow="hidden" >
       {/* <Flex h="100vh" w="100vw" position="fixed" bgImage="/bg.jpg" zIndex={1} top={0} bgSize="cover" opacity={0.06} /> */}
-      <PortfolioWindow delay={0} right={"40%"} top={"40%"} index={0} />
-      <PortfolioWindow delay={5} right={"50%"} top={"52%"} index={1} />
-      <PortfolioWindow delay={10} right={"50%"} top={"40%"} index={2} />
-      <PortfolioWindow delay={15} right={"35%"} top={"52%"} index={4} />
-      <PortfolioWindow delay={20} right={"40%"} top={"40%"} index={5} />
-      <PortfolioWindow delay={25} right={"50%"} top={"52%"} index={6} />
-      <PortfolioWindow delay={30} right={"50%"} top={"40%"} index={7} />
-      <PortfolioWindow delay={35} right={"30%"} top={"40%"} index={8} />
-      <PortfolioWindow delay={40} right={"40%"} top={"40%"} index={9} />
-      <PortfolioWindow delay={45} right={"50%"} top={"52%"} index={10} />
-      <PortfolioWindow delay={50} right={"50%"} top={"40%"} index={11} />
-      <PortfolioWindow delay={55} right={"30%"} top={"40%"} index={12} />
-      <PortfolioWindow delay={60} right={"40%"} top={"52%"} index={13} />
-      <PortfolioWindow delay={65} right={"50%"} top={"52%"} index={14} />
-      <PortfolioWindow delay={70} right={"50%"} top={"40%"} index={15} />
-      <PortfolioWindow delay={75} right={"30%"} top={"40%"} index={16} />
-      <PortfolioWindow delay={80} right={"50%"} top={"40%"} index={17} />
-      <PortfolioWindow delay={85} right={"35%"} top={"52%"} index={18} />
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyLoadedPortfolioWindow delay={0} right={"40%"} top={"40%"} index={0} />
+        <LazyLoadedPortfolioWindow delay={5} right={"50%"} top={"52%"} index={1} />
+        <LazyLoadedPortfolioWindow delay={10} right={"50%"} top={"40%"} index={2} />
+        <LazyLoadedPortfolioWindow delay={15} right={"35%"} top={"52%"} index={4} />
+        <LazyLoadedPortfolioWindow delay={20} right={"40%"} top={"40%"} index={5} />
+        <LazyLoadedPortfolioWindow delay={25} right={"50%"} top={"52%"} index={6} />
+        <LazyLoadedPortfolioWindow delay={30} right={"50%"} top={"40%"} index={7} />
+        <LazyLoadedPortfolioWindow delay={35} right={"30%"} top={"40%"} index={8} />
+        <LazyLoadedPortfolioWindow delay={40} right={"40%"} top={"40%"} index={9} />
+        <LazyLoadedPortfolioWindow delay={45} right={"50%"} top={"52%"} index={10} />
+        <LazyLoadedPortfolioWindow delay={50} right={"50%"} top={"40%"} index={11} />
+        <LazyLoadedPortfolioWindow delay={55} right={"30%"} top={"40%"} index={12} />
+        <LazyLoadedPortfolioWindow delay={60} right={"40%"} top={"52%"} index={13} />
+        <LazyLoadedPortfolioWindow delay={65} right={"50%"} top={"52%"} index={14} />
+        <LazyLoadedPortfolioWindow delay={70} right={"50%"} top={"40%"} index={15} />
+        <LazyLoadedPortfolioWindow delay={75} right={"30%"} top={"40%"} index={16} />
+        <LazyLoadedPortfolioWindow delay={80} right={"50%"} top={"40%"} index={17} />
+        <LazyLoadedPortfolioWindow delay={85} right={"35%"} top={"52%"} index={18} />
+      </Suspense>
 
       <Flex direction="row" alignItems="center" justifyContent="space-between" h="100vh" w="100%" top={0} position="fixed" pt="80px" px="150px" zIndex={20}>
         <VerticalProgressBar />
@@ -114,13 +123,13 @@ export default function index() {
           <Year year={"2022"} start={90} end={94.9} scroll={scrollPercentage} />
         </Flex>
       </Flex>
-      {/* <Flex direction="column" alignItems="center" justifyContent="center" h="100vh" w="40vw" top="0px" position="fixed" bgImage="/background.png" fontSize="50px" color="white" opacity={textOpacity} zIndex={50}>
+      <Flex direction="column" alignItems="center" justifyContent="center" h="100vh" w="40vw" top="0px" position="fixed" bgImage="/background.png" fontSize="50px" color="white" opacity={textOpacity} zIndex={50}>
         <Flex direction="column" alignItems="center" mt={"55px"} lineHeight={"55px"} >
           <Text >Faça scroll para</Text>
           <Text>conhecer os nossos</Text>
           <Text>projetos</Text>
         </Flex>
-      </Flex> */}
+      </Flex>
     </Flex >
 
   );

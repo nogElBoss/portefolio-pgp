@@ -17,11 +17,15 @@ export default function PortfolioWindow({
     const [scrollPercentage, setScrollPercentage] = useState(0);
     const [opacity, setOpacity] = useState(0.5);
     const [blur, setBlur] = useState(5);
+    const [ratio, setRatio] = useState(0);
 
     useEffect(() => {
         const handleScroll = () => {
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
+            const windowWidth = window.innerWidth;
+            setRatio(windowWidth / windowHeight);
+
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const currentScrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
             setScrollPercentage(currentScrollPercentage - delay);
@@ -34,7 +38,7 @@ export default function PortfolioWindow({
                     setOpacity(0.7);
                     if (scrollPercentage > 5.6) {
                         setBlur(2);
-                        setOpacity(0.8);
+                        setOpacity(0.8); `q`
                         if (scrollPercentage > 5.9) {
                             setBlur(1);
                             setOpacity(0.9);
@@ -88,17 +92,17 @@ export default function PortfolioWindow({
         };
     }, [scrollPercentage, delay]);
 
-    const calculatedTop = 50 - scrollPercentage * 30 + "vh";
-    const calculatedWidth = scrollPercentage > 28 ? 0 + "vw" : scrollPercentage * 30 + "vw";
-    const calculatedHeight = scrollPercentage > 28 ? 0 + "vw" : scrollPercentage * 30 + "vw";
+    const calculatedTop = 50 - scrollPercentage * (14.7 * ratio) + "vh";
+    const calculatedWidth = scrollPercentage > 28 ? 0 : scrollPercentage * 30;
+    const calculatedHeight = scrollPercentage > 28 ? 0 : scrollPercentage * 30;
     const calculatedFilter = "blur(" + blur + "px)";
 
     return (
         <Box
             zIndex={20 - index}
             top={calculatedTop}
-            w={calculatedWidth}
-            h={calculatedHeight}
+            w={calculatedWidth >= 400 ? 400 + "vw" : calculatedWidth + "vw"}
+            h={calculatedHeight >= 400 ? 200 + "vw" : calculatedHeight + "vw"}
             position="fixed"
             overflowY="hidden"
             bg="none"
