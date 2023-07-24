@@ -1,4 +1,20 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    Heading,
+    Drawer,
+    DrawerBody,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+    useDisclosure,
+    Input,
+    Button,
+} from "@chakra-ui/react";
+import React from "react";
+
 import { useState, useEffect } from "react";
 
 type PortfolioWindowProps = {
@@ -20,6 +36,9 @@ export default function PortfolioWindow({
     const [ratio, setRatio] = useState(0);
     const [active, setActive] = useState(false);
     const [fontSize, setFontSize] = useState(0);
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const btnRef = React.useRef()
 
     useEffect(() => {
         const windowHeight = window.innerHeight;
@@ -103,49 +122,75 @@ export default function PortfolioWindow({
     const calculatedFilter = "blur(" + blur + "px)";
 
     return (
-        <Box
-            zIndex={100 - index}
-            top={calculatedTop}
-            w={calculatedWidth >= 400 ? 400 + "vw" : calculatedWidth + "vw"}
-            h={calculatedHeight >= 400 ? 200 + "vw" : calculatedHeight + "vw"}
-            position="fixed"
-            overflowY="hidden"
-            bg="none"
-            opacity={opacity}
-            display={opacity == 0 ? "none" : "block"}
-
-        >
+        <>
             <Box
-                w="12%"
-                h="7%"
-                position="absolute"
-                top={top}
-                right={right}
-                overflow="hidden"
-                filter={calculatedFilter}
-                bgImg="/image.jpg"
-                bgSize="cover"
-                bgRepeat="no-repeat"
-                _hover={active ? {
-                    cursor: "pointer"
-                } : {}}
-            >
-                <Flex
-                    w="100%"
-                    h="100%"
-                    alignItems="center"
-                    justifyContent="center"
-                    opacity={0}
-                    _hover={active ? {
-                        background: "rgb(0,0,0,0.4)",
-                        filter: "brightness(100%)",
-                        opacity: 1
-                    } : {}}
+                zIndex={100 - index}
+                top={calculatedTop}
+                w={calculatedWidth >= 400 ? 400 + "vw" : calculatedWidth + "vw"}
+                h={calculatedHeight >= 400 ? 200 + "vw" : calculatedHeight + "vw"}
+                position="fixed"
+                overflowY="hidden"
+                bg="none"
+                opacity={opacity}
+                display={opacity == 0 ? "none" : "block"}
 
+            >
+                <Box
+                    w="12%"
+                    h="7%"
+                    position="absolute"
+                    top={top}
+                    right={right}
+                    overflow="hidden"
+                    filter={calculatedFilter}
+                    bgImg="/image.jpg"
+                    bgSize="cover"
+                    bgRepeat="no-repeat"
+                    _hover={active ? {
+                        cursor: "pointer"
+                    } : {}}
                 >
-                    <Heading color="white" fontSize={fontSize}>NOME DO PROJETO</Heading>
-                </Flex>
+                    <Flex
+                        onClick={active ? onOpen : () => { }}
+                        w="100%"
+                        h="100%"
+                        alignItems="center"
+                        justifyContent="center"
+                        opacity={0}
+                        _hover={active ? {
+                            background: "rgb(0,0,0,0.4)",
+                            filter: "brightness(100%)",
+                            opacity: 1
+                        } : {}}
+
+                    >
+                        <Heading color="white" fontSize={fontSize}>NOME DO PROJETO</Heading>
+                    </Flex>
+                </Box>
             </Box>
-        </Box>
+            <Drawer
+                size="full"
+                isOpen={isOpen}
+                placement='right'
+                onClose={onClose}
+            >
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerHeader>Create your account</DrawerHeader>
+
+                    <DrawerBody>
+                        <Input placeholder='Type here...' />
+                    </DrawerBody>
+
+                    <DrawerFooter>
+                        <Button variant='outline' mr={3} onClick={onClose}>
+                            Cancel
+                        </Button>
+                        <Button colorScheme='blue'>Save</Button>
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
+        </>
     );
 }

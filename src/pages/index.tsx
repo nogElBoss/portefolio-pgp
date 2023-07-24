@@ -12,7 +12,7 @@ export default function index() {
 
 
   const [scroll, setScroll] = useState(0)
-  const [textOpacity, setTextOpacity] = useState(1)
+  const [textOpacity, setTextOpacity] = useState(0)
   const [scrollPercentage, setScrollPercentage] = useState(0)
 
   useEffect(() => {
@@ -32,49 +32,8 @@ export default function index() {
     };
   }, [scrollPercentage]);
 
-  if (typeof window !== "undefined") {
-    window.addEventListener("scroll", function () {
-      let value = window.scrollY
-      setScroll((value / 200))
-
-      if (scroll >= 0) {
-        setTextOpacity(1)
-        if (scroll > 0.5) {
-          setTextOpacity(0.8)
-          if (scroll > 1) {
-            setTextOpacity(0.6)
-            if (scroll > 1.5) {
-              setTextOpacity(0.4)
-              if (scroll > 2) {
-                setTextOpacity(0.3)
-                if (scroll > 2.5) {
-                  setTextOpacity(0.2)
-                  if (scroll > 3) {
-                    setTextOpacity(0.1)
-                    if (scroll > 3.5) {
-                      setTextOpacity(0.06)
-                      if (scroll > 4) {
-                        setTextOpacity(0.04)
-                        if (scroll > 4.5) {
-                          setTextOpacity(0.02)
-                          if (scroll > 5) {
-                            setTextOpacity(0)
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    })
-  }
-
   return (
-    <Flex backgroundColor="black" w="100vw" h="1850vw" alignItems="center" justifyContent="center" overflow="hidden" >
+    <Flex backgroundColor="black" w="100vw" h="1000vw" alignItems="center" justifyContent="center" overflow="hidden" >
       {/* <Flex h="100vh" w="100vw" position="fixed" bgImage="/bg.jpg" zIndex={1} top={0} bgSize="cover" opacity={0.06} /> */}
 
       <Suspense fallback={<div>Loading...</div>}>
@@ -124,13 +83,13 @@ export default function index() {
           <Year year={"2022"} start={90} end={94.9} scroll={scrollPercentage} />
         </Flex>
       </Flex>
-      <Flex direction="column" alignItems="center" justifyContent="center" h="100vh" w="40vw" top="0px" position="fixed" bgImage="/background.png" fontSize="50px" color="white" opacity={textOpacity} zIndex={50}>
+      {/* <Flex direction="column" alignItems="center" justifyContent="center" h="100vh" w="40vw" top="0px" position="fixed" bgImage="/background.png" fontSize="50px" color="white" opacity={textOpacity} zIndex={50}>
         <Flex direction="column" alignItems="center" mt={"55px"} lineHeight={"55px"} >
           <Text >Faça scroll para</Text>
           <Text>conhecer os nossos</Text>
           <Text>projetos</Text>
         </Flex>
-      </Flex>
+      </Flex> */}
     </Flex >
 
   );
