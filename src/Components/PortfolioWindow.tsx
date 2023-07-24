@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
 type PortfolioWindowProps = {
@@ -18,17 +18,20 @@ export default function PortfolioWindow({
     const [opacity, setOpacity] = useState(0.5);
     const [blur, setBlur] = useState(5);
     const [ratio, setRatio] = useState(0);
+    const [active, setActive] = useState(false);
+    const [fontSize, setFontSize] = useState(0);
 
     useEffect(() => {
         const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
         const windowWidth = window.innerWidth;
+        const documentHeight = document.documentElement.scrollHeight;
         setRatio(windowWidth / windowHeight);
 
         const handleScroll = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const currentScrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
             setScrollPercentage(currentScrollPercentage - delay);
+            setFontSize(5 * scrollPercentage)
 
             if (scrollPercentage > 5) {
                 setBlur(4);
@@ -44,6 +47,7 @@ export default function PortfolioWindow({
                             setOpacity(0.9);
                             if (scrollPercentage > 5.2) {
                                 setBlur(0);
+                                setActive(true)
                                 setOpacity(1);
                             }
                         }
@@ -54,30 +58,31 @@ export default function PortfolioWindow({
                 setOpacity(0.5);
             }
 
-            if (scrollPercentage > 7) {
+            if (scrollPercentage > 8) {
                 setOpacity(0.9);
-                if (scrollPercentage > 7.5) {
-                    setOpacity(0.8);
-                    if (scrollPercentage > 8) {
-                        setOpacity(0.7);
-                        if (scrollPercentage > 8.5) {
-                            setOpacity(0.6);
-                            if (scrollPercentage > 9) {
-                                setOpacity(0.5);
-                                if (scrollPercentage > 9.5) {
-                                    setOpacity(0.4);
-                                    if (scrollPercentage > 10) {
+                if (scrollPercentage > 8.5) {
+                    setOpacity(0.7);
+                    if (scrollPercentage > 9) {
+                        setOpacity(0.5);
+                        setActive(false)
+                        if (scrollPercentage > 9.5) {
+                            setOpacity(0.3);
+                            if (scrollPercentage > 10) {
+                                setOpacity(0.1);
+                                if (scrollPercentage > 10.9) {
+                                    setOpacity(0.0);
+                                    /* if (scrollPercentage > 11) {
                                         setOpacity(0.3);
-                                        if (scrollPercentage > 10.5) {
+                                        if (scrollPercentage > 11.5) {
                                             setOpacity(0.2);
-                                            if (scrollPercentage > 11) {
+                                            if (scrollPercentage > 12) {
                                                 setOpacity(0.1);
-                                                if (scrollPercentage > 11.5) {
+                                                if (scrollPercentage > 12.5) {
                                                     setOpacity(0);
                                                 }
                                             }
                                         }
-                                    }
+                                    } */
                                 }
                             }
                         }
@@ -99,7 +104,7 @@ export default function PortfolioWindow({
 
     return (
         <Box
-            zIndex={20 - index}
+            zIndex={100 - index}
             top={calculatedTop}
             w={calculatedWidth >= 400 ? 400 + "vw" : calculatedWidth + "vw"}
             h={calculatedHeight >= 400 ? 200 + "vw" : calculatedHeight + "vw"}
@@ -107,11 +112,12 @@ export default function PortfolioWindow({
             overflowY="hidden"
             bg="none"
             opacity={opacity}
+            display={opacity == 0 ? "none" : "block"}
+
         >
             <Box
                 w="12%"
                 h="7%"
-                bg="red"
                 position="absolute"
                 top={top}
                 right={right}
@@ -120,7 +126,26 @@ export default function PortfolioWindow({
                 bgImg="/image.jpg"
                 bgSize="cover"
                 bgRepeat="no-repeat"
-            />
+                _hover={active ? {
+                    cursor: "pointer"
+                } : {}}
+            >
+                <Flex
+                    w="100%"
+                    h="100%"
+                    alignItems="center"
+                    justifyContent="center"
+                    opacity={0}
+                    _hover={active ? {
+                        background: "rgb(0,0,0,0.4)",
+                        filter: "brightness(100%)",
+                        opacity: 1
+                    } : {}}
+
+                >
+                    <Heading color="white" fontSize={fontSize}>NOME DO PROJETO</Heading>
+                </Flex>
+            </Box>
         </Box>
     );
 }

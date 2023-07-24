@@ -5,7 +5,7 @@ const Fonts = () => (
     styles={`
       @font-face {
         font-family: 'Heading Font';
-        src: url('./fonts/NuancesNormal-BlackTrial.ttf');
+        src: url('./fonts/NuancesExtended-ThinTrial.ttf');
         font-display: swap;
       }
       @font-face {

@@ -12,12 +12,11 @@ export default function index() {
 
 
   const [scroll, setScroll] = useState(0)
-  const [textOpacity, setTextOpacity] = useState(0)
+  const [textOpacity, setTextOpacity] = useState(1)
   const [scrollPercentage, setScrollPercentage] = useState(0)
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
     const documentHeight = document.documentElement.scrollHeight;
 
     const handleScroll = () => {
@@ -33,7 +32,7 @@ export default function index() {
     };
   }, [scrollPercentage]);
 
-  /* if (typeof window !== "undefined") {
+  if (typeof window !== "undefined") {
     window.addEventListener("scroll", function () {
       let value = window.scrollY
       setScroll((value / 200))
@@ -72,7 +71,7 @@ export default function index() {
         }
       }
     })
-  } */
+  }
 
   return (
     <Flex backgroundColor="black" w="100vw" h="1850vw" alignItems="center" justifyContent="center" overflow="hidden" >
