@@ -20,12 +20,12 @@ export default function PortfolioWindow({
     const [ratio, setRatio] = useState(0);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            const windowWidth = window.innerWidth;
-            setRatio(windowWidth / windowHeight);
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowWidth = window.innerWidth;
+        setRatio(windowWidth / windowHeight);
 
+        const handleScroll = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const currentScrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
             setScrollPercentage(currentScrollPercentage - delay);

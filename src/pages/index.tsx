@@ -8,18 +8,20 @@ import { Suspense, lazy } from "react";
 const LazyLoadedPortfolioWindow = lazy(() => import('@/Components/PortfolioWindow'));
 
 export default function index() {
+
+
+
   const [scroll, setScroll] = useState(0)
-  const [textOpacity, setTextOpacity] = useState(1)
+  const [textOpacity, setTextOpacity] = useState(0)
   const [scrollPercentage, setScrollPercentage] = useState(0)
 
   useEffect(() => {
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    const documentHeight = document.documentElement.scrollHeight;
+
     const handleScroll = () => {
-      const windowHeight = window.innerHeight;
-      const windowWidth = window.innerWidth;
 
-      console.log(windowWidth / windowHeight)
-
-      const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const currentScrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
       setScrollPercentage(currentScrollPercentage);
@@ -31,7 +33,7 @@ export default function index() {
     };
   }, [scrollPercentage]);
 
-  if (typeof window !== "undefined") {
+  /* if (typeof window !== "undefined") {
     window.addEventListener("scroll", function () {
       let value = window.scrollY
       setScroll((value / 200))
@@ -70,7 +72,7 @@ export default function index() {
         }
       }
     })
-  }
+  } */
 
   return (
     <Flex backgroundColor="black" w="100vw" h="1850vw" alignItems="center" justifyContent="center" overflow="hidden" >
